@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Christopher Sinclair — Fractional CTO &amp; Engineering Advisor</title>
+<meta name="description" content="Christopher Sinclair is a fractional CTO and engineering advisor. He ships AI that does real work — he doesn't just advise on it." />
+<link rel="canonical" href="https://sinclaircto.com" />
+<style>
+  /* ============================================================
+     DESIGN SYSTEM — senior editorial, warm near-black
+     Tokens (no orphan hex: every value below the :root goes through
+     a variable. The only raw values are the noise/gradient inline SVGs.)
+     ============================================================ */
+  :root {
+    /* surfaces — warm monochrome, near-black canvas */
+    --bg:            #0E0D0B;
+    --bg-raise:      #14120E;
+    --ink:           #EDE6D8;   /* primary warm off-white */
+    --ink-soft:      #B3AB9B;   /* secondary, AA on canvas */
+    --ink-faint:     #7E7767;   /* tertiary meta */
+    --line:          rgba(237, 230, 216, 0.10);
+
+    /* accent — brass. Deliberately NOT purple/blue SaaS cliché. */
+    --accent:        #C9A24B;
+    --accent-bright: #E4C679;
+    --accent-deep:   #8A6A25;
+
+    /* type families (system stacks, graceful degradation; no webfonts) */
+    --font-serif: "Georgia", "Iowan Old Style", "Palatino Linotype",
+                  "Times New Roman", serif;
+    --font-mono:  ui-monospace, "SF Mono", "Cascadia Mono", "Menlo",
+                  "Consolas", monospace;
+    --font-sans:  system-ui, -apple-system, "Segoe UI", "Roboto",
+                  "Helvetica Neue", sans-serif;
+
+    /* type scale — fluid, clamp() */
+    --t-display: clamp(2.75rem, 6.5vw + 1rem, 5.75rem);
+    --t-h2:      clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
+    --t-lead:    clamp(1.5rem, 2.2vw + 0.5rem, 2.5rem);
+    --t-body:    clamp(1.0625rem, 0.4vw + 0.95rem, 1.1875rem);
+    --t-small:   clamp(0.8125rem, 0.2vw + 0.7rem, 0.875rem);
+    --t-mono:    0.75rem;
+
+    /* space — 4px-ish rhythm, generous macro whitespace */
+    --space-1: 0.5rem;
+    --space-2: 1rem;
+    --space-3: 1.75rem;
+    --space-4: 2.5rem;
+    --space-5: 4rem;
+    --space-6: clamp(4.5rem, 10vw, 8rem);
+
+    /* container / reading width */
+    --wrap-max: 74rem;          /* outer container */
+    --measure:  40rem;          /* reading measure for prose */
+
+    /* radius — crisp editorial, no pills on containers */
+    --r-sm: 3px;
+    --r-md: 10px;
+
+    /* elevation — near-flat, only trace depth */
+    --elev-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+
+    /* motion */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur-1: 600ms;
+    --dur-2: 200ms;
+  }
+
+  /* ============================================================
+     RESET / BASE
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--t-body);
+    line-height: 1.6;
+    font-feature-settings: "liga" 1, "kern" 1;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* film-grain atmosphere — inline SVG turbulence, no image files */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  main, .site-header, .site-footer { position: relative; z-index: 1; }
+
+  p { margin: 0; }
+  a { color: inherit; }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-bright);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* ============================================================
+     LAYOUT — container + section rhythm
+     ============================================================ */
+  .wrap {
+    width: 100%;
+    max-width: var(--wrap-max);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 5vw, 2.5rem);
+  }
+
+  section { border-top: 1px solid var(--line); }
+
+  /* ============================================================
+     HEADER / TOP BAR
+     ============================================================ */
+  .site-header {
+    background: transparent;
+  }
+  .header-inner {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-block: var(--space-3);
+  }
+  .name-mark {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .header-meta {
+    display: flex;
+    gap: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--t-mono);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .header-meta a {
+    text-decoration: none;
+    transition: color var(--dur-2) ease;
+  }
+  .header-meta a:hover { color: var(--accent-bright); }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero {
+    position: relative;
+    border-top: none;
+    overflow: hidden;
+  }
+  /* soft warm glow — single subtle atmospheric band, not a purple gradient */
+  .hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(58% 48% at 50% 8%, rgba(201, 162, 75, 0.13), transparent 68%),
+      radial-gradient(40% 34% at 82% 4%, rgba(237, 230, 216, 0.05), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner {
+    max-width: var(--measure);
+    padding-block: clamp(4rem, 12vh, 8.5rem) clamp(4rem, 11vh, 7.5rem);
+  }
+  .kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--t-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: var(--space-3);
+  }
+  /* brass rule on the kicker — the accent moment */
+  .kicker::before {
+    content: "";
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+    flex: none;
+  }
+
+  .hero h1 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: var(--t-display);
+    line-height: 1.02;
+    letter-spacing: -0.026em;
+    text-wrap: balance;
+    margin: 0 0 var(--space-3);
+  }
+  .hero-sub {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: var(--t-lead);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
+    color: var(--ink-soft);
+    max-width: 24ch;
+    margin-bottom: var(--space-4);
+  }
+
+  .hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  /* ============================================================
+     BUTTONS / LINKS
+     ============================================================ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    text-decoration: none;
+    padding: 0.95rem 1.6rem;
+    border-radius: var(--r-sm);
+    border: 1px solid transparent;
+    transition:
+      background-color var(--dur-2) ease,
+      border-color var(--dur-2) ease,
+      color var(--dur-2) ease,
+      transform var(--dur-2) var(--ease-out);
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .btn-primary:hover {
+    background: var(--accent-bright);
+    color: var(--bg);
+    transform: translateY(-2px);
+  }
+  .btn-primary:active { transform: translateY(0); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  .btn-ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent-bright);
+    transform: translateY(-2px);
+  }
+  .btn-ghost:active { transform: translateY(0); }
+
+  /* ============================================================
+     SECTION SCAFFOLD
+     ============================================================ */
+  .section-pad { padding-block: var(--space-6); }
+
+  .section-eyebrow {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: var(--t-mono);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--space-3);
+  }
+  .section-eyebrow .num { color: var(--ink-faint); }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: var(--t-h2);
+    line-height: 1.08;
+    letter-spacing: -0.022em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  /* ============================================================
+     PROOF — large confident serif statements with mono index
+     ============================================================ */
+  .proof-head {
+    margin-bottom: var(--space-5);
+  }
+  .proof-list {
+    display: grid;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: proof;
+  }
+  .proof-item {
+    counter-increment: proof;
+    display: grid;
+    grid-template-columns: 4.5rem 1fr;
+    gap: var(--space-2);
+    align-items: baseline;
+    padding: var(--space-4) 0;
+    border-top: 1px solid var(--line);
+  }
+  .proof-item:last-child { border-bottom: 1px solid var(--line); }
+  .proof-item .idx {
+    font-family: var(--font-mono);
+    font-size: var(--t-mono);
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+  }
+  .proof-item .idx::before { content: counter(proof, decimal-leading-zero); }
+  .proof-item p {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: var(--t-lead);
+    line-height: 1.16;
+    letter-spacing: -0.016em;
+    text-wrap: balance;
+    max-width: 56ch;
+  }
+
+  /* ============================================================
+     WHAT I DO
+     ============================================================ */
+  .do-head { margin-bottom: var(--space-4); }
+  .do-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+    margin: 0;
+  }
+  .do-item {
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--line);
+  }
+  .do-item .idx {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--t-mono);
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+    margin-bottom: var(--space-1);
+  }
+  .do-item h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: 1.5rem;
+    line-height: 1.14;
+    letter-spacing: -0.018em;
+    margin: 0 0 var(--space-1);
+  }
+  .do-item p {
+    color: var(--ink-soft);
+    font-size: 1rem;
+    line-height: 1.5;
+    max-width: 30ch;
+  }
+
+  /* ============================================================
+     WHO I WORK WITH
+     ============================================================ */
+  .who-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--space-4);
+    align-items: start;
+  }
+  .who-statement {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: var(--t-lead);
+    line-height: 1.24;
+    letter-spacing: -0.016em;
+    text-wrap: balance;
+    max-width: 40ch;
+  }
+  .who-note {
+    color: var(--ink-soft);
+    font-size: var(--t-small);
+    line-height: 1.7;
+    max-width: 44ch;
+    padding-left: var(--space-2);
+    border-left: 1px solid var(--line);
+  }
+
+  /* ============================================================
+     LET'S TALK — the single conversion point
+     ============================================================ */
+  .talk-inner {
+    max-width: var(--measure);
+  }
+  .talk-cta {
+    display: block;
+    margin-top: var(--space-4);
+    font-family: var(--font-serif);
+    font-weight: 500;
+    font-size: clamp(1.9rem, 4.6vw + 0.6rem, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.026em;
+    color: var(--ink);
+    text-decoration: none;
+    word-break: break-word;
+    transition: color var(--dur-2) ease;
+  }
+  .talk-cta:hover { color: var(--accent-bright); }
+  .talk-cta .arrow {
+    font-family: var(--font-sans);
+    color: var(--accent);
+    transition: transform var(--dur-2) var(--ease-out);
+  }
+  .talk-cta:hover .arrow { transform: translateX(0.3rem); }
+
+  .talk-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: var(--t-mono);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .talk-links a { color: var(--ink-faint); text-decoration: none; transition: color var(--dur-2) ease; }
+  .talk-links a:hover { color: var(--accent-bright); }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  .site-footer {
+    border-top: 1px solid var(--line);
+    margin-top: auto;
+  }
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-block: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--t-mono);
+    letter-spacing: 0.08em;
+    color: var(--ink-faint);
+  }
+  .footer-copy { color: var(--ink-faint); }
+
+  /* ============================================================
+     MOTION — progressive enhancement (html.js only).
+     No-JS === everything visible, all the time.
+     ============================================================ */
+  @media (prefers-reduced-motion: no-preference) {
+    html.js .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition:
+        opacity var(--dur-1) var(--ease-out),
+        transform var(--dur-1) var(--ease-out);
+    }
+    html.js .reveal.in {
+      opacity: 1;
+      transform: none;
+    }
+    /* stagger the lists */
+    html.js .proof-item { transition-delay: calc(var(--i, 0) * 70ms); }
+    html.js .do-item   { transition-delay: calc(var(--i, 0) * 90ms); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 760px) {
+    .who-inner { grid-template-columns: 1fr; gap: var(--space-2); }
+    .who-note { padding-left: 0; border-left: none; padding-top: var(--space-2); border-top: 1px solid var(--line); }
+    .do-list { grid-template-columns: 1fr; gap: var(--space-3); }
+    .proof-item { grid-template-columns: 3rem 1fr; }
+  }
+  @media (max-width: 480px) {
+    .header-meta { display: none; }
+    .hero-cta { flex-direction: column; align-items: stretch; }
+    .hero-cta .btn { justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="name-mark" href="#top" aria-label="Christopher Sinclair — back to top">Christopher Sinclair</a>
+      <nav class="header-meta" aria-label="Primary">
+        <a href="#proof">Proof</a>
+        <a href="#what">What I do</a>
+        <a href="#who">Who I work with</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-inner">
+        <p class="kicker reveal">Fractional CTO &amp; Engineering Advisor</p>
+        <h1 id="hero-title" class="reveal">I ship AI that does real work.</h1>
+        <p class="hero-sub reveal">I don't just advise on it.</p>
+        <div class="hero-cta reveal">
+          <a class="btn btn-primary" href="mailto:chris@sinclaircto.com">Email me <span aria-hidden="true">&rarr;</span></a>
+          <a class="btn btn-ghost" href="https://www.linkedin.com/in/christopher-sinclair-cto" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROOF -->
+    <section class="section-pad" id="proof" aria-labelledby="proof-title">
+      <div class="wrap">
+        <div class="proof-head reveal">
+          <p class="section-eyebrow"><span class="num">01</span></p>
+          <h2 id="proof-title">Proof, not promises</h2>
+        </div>
+        <ul class="proof-list">
+          <li class="proof-item reveal" style="--i:0">
+            <span class="idx" aria-hidden="true"></span>
+            <p>Built the AI platform that answers customer calls, handles reviews, and chases leads for over 10,000 businesses.</p>
+          </li>
+          <li class="proof-item reveal" style="--i:1">
+            <span class="idx" aria-hidden="true"></span>
+            <p>Built the attribution system that proves it makes money.</p>
+          </li>
+          <li class="proof-item reveal" style="--i:2">
+            <span class="idx" aria-hidden="true"></span>
+            <p>Went from full-stack engineer to CTO in two and a half years, leading a 13-person team.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- WHAT I DO -->
+    <section class="section-pad" id="what" aria-labelledby="what-title">
+      <div class="wrap">
+        <div class="do-head reveal">
+          <p class="section-eyebrow"><span class="num">02</span></p>
+          <h2 id="what-title">What I do</h2>
+        </div>
+        <div class="do-list">
+          <div class="do-item reveal" style="--i:0">
+            <span class="idx" aria-hidden="true">01</span>
+            <h3>Fractional CTO</h3>
+            <p>engineering leadership without the full-time cost.</p>
+          </div>
+          <div class="do-item reveal" style="--i:1">
+            <span class="idx" aria-hidden="true">02</span>
+            <h3>Interim CTO</h3>
+            <p>step in when you're between technical leaders.</p>
+          </div>
+          <div class="do-item reveal" style="--i:2">
+            <span class="idx" aria-hidden="true">03</span>
+            <h3>Hands-on engineering</h3>
+            <p>I still write Python, TypeScript, Go, and Rust.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO I WORK WITH -->
+    <section class="section-pad" id="who" aria-labelledby="who-title">
+      <div class="wrap">
+        <div class="who-head reveal">
+          <p class="section-eyebrow"><span class="num">03</span></p>
+        </div>
+        <div class="who-inner">
+          <h2 id="who-title" class="reveal">Who I work with</h2>
+          <p class="who-statement reveal">SaaS and AI companies that are between CTOs, post-funding, or growing faster than their engineering team can keep up.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LET'S TALK -->
+    <section class="section-pad" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <div class="talk-inner">
+          <p class="section-eyebrow reveal"><span class="num">04</span></p>
+          <h2 id="contact-title" class="reveal">Let's talk</h2>
+          <a class="talk-cta reveal" href="mailto:chris@sinclaircto.com">
+            chris@sinclaircto.com <span class="arrow" aria-hidden="true">&rarr;</span>
+          </a>
+          <div class="talk-links reveal">
+            <a href="https://www.linkedin.com/in/christopher-sinclair-cto" target="_blank" rel="noopener noreferrer">LinkedIn &nearr;</a>
+            <a href="mailto:chris@sinclaircto.com">Email</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span class="footer-copy">Christopher Sinclair LLC &middot; Wyoming</span>
+      <span aria-hidden="true">&copy; Christopher Sinclair</span>
+    </div>
+  </footer>
+
+  <script>
+    /* Progressive-enhancement reveal. html.js is added only when JS runs,
+       so a no-JS environment keeps every node fully visible.
+       Disabled entirely under prefers-reduced-motion. */
+    (function () {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) return;
+
+      document.documentElement.classList.add('js');
+
+      var els = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) return;
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+      els.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+</body>
+</html>
