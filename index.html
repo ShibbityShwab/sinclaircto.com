@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Christopher Sinclair — Fractional CTO &amp; Engineering Advisor</title>
-<meta name="description" content="Christopher Sinclair is a fractional CTO and engineering advisor. He ships AI that does real work — he doesn't just advise on it." />
+<title>Christopher Sinclair, Fractional CTO &amp; Engineering Advisor</title>
+<meta name="description" content="Christopher Sinclair is a fractional CTO and engineering advisor. He ships AI that does real work, he doesn't just advise on it." />
 <link rel="canonical" href="https://sinclaircto.com" />
 <style>
   /* ============================================================
-     DESIGN SYSTEM — senior editorial, warm near-black
+     DESIGN SYSTEM, senior editorial, warm near-black
      Tokens (no orphan hex: every value below the :root goes through
      a variable. The only raw values are the noise/gradient inline SVGs.)
      ============================================================ */
   :root {
-    /* surfaces — warm monochrome, near-black canvas */
+    /* surfaces, warm monochrome, near-black canvas */
     --bg:            #0E0D0B;
     --bg-raise:      #14120E;
     --ink:           #EDE6D8;   /* primary warm off-white */
@@ -21,7 +21,7 @@
     --ink-faint:     #7E7767;   /* tertiary meta */
     --line:          rgba(237, 230, 216, 0.10);
 
-    /* accent — brass. Deliberately NOT purple/blue SaaS cliché. */
+    /* accent, brass. Deliberately NOT purple/blue SaaS cliché. */
     --accent:        #C9A24B;
     --accent-bright: #E4C679;
     --accent-deep:   #8A6A25;
@@ -34,7 +34,7 @@
     --font-sans:  system-ui, -apple-system, "Segoe UI", "Roboto",
                   "Helvetica Neue", sans-serif;
 
-    /* type scale — fluid, clamp() */
+    /* type scale, fluid, clamp() */
     --t-display: clamp(2.75rem, 6.5vw + 1rem, 5.75rem);
     --t-h2:      clamp(1.75rem, 3vw + 0.5rem, 2.75rem);
     --t-lead:    clamp(1.5rem, 2.2vw + 0.5rem, 2.5rem);
@@ -42,7 +42,7 @@
     --t-small:   clamp(0.8125rem, 0.2vw + 0.7rem, 0.875rem);
     --t-mono:    0.75rem;
 
-    /* space — 4px-ish rhythm, generous macro whitespace */
+    /* space, 4px-ish rhythm, generous macro whitespace */
     --space-1: 0.5rem;
     --space-2: 1rem;
     --space-3: 1.75rem;
@@ -54,11 +54,11 @@
     --wrap-max: 74rem;          /* outer container */
     --measure:  40rem;          /* reading measure for prose */
 
-    /* radius — crisp editorial, no pills on containers */
+    /* radius, crisp editorial, no pills on containers */
     --r-sm: 3px;
     --r-md: 10px;
 
-    /* elevation — near-flat, only trace depth */
+    /* elevation, near-flat, only trace depth */
     --elev-1: 0 1px 2px rgba(0, 0, 0, 0.35);
 
     /* motion */
@@ -93,7 +93,7 @@
     flex-direction: column;
   }
 
-  /* film-grain atmosphere — inline SVG turbulence, no image files */
+  /* film-grain atmosphere, inline SVG turbulence, no image files */
   body::before {
     content: "";
     position: fixed;
@@ -121,7 +121,7 @@
   }
 
   /* ============================================================
-     LAYOUT — container + section rhythm
+     LAYOUT, container + section rhythm
      ============================================================ */
   .wrap {
     width: 100%;
@@ -175,7 +175,7 @@
     border-top: none;
     overflow: hidden;
   }
-  /* soft warm glow — single subtle atmospheric band, not a purple gradient */
+  /* soft warm glow, single subtle atmospheric band, not a purple gradient */
   .hero::after {
     content: "";
     position: absolute;
@@ -201,7 +201,7 @@
     color: var(--ink-soft);
     margin-bottom: var(--space-3);
   }
-  /* brass rule on the kicker — the accent moment */
+  /* brass rule on the kicker, the accent moment */
   .kicker::before {
     content: "";
     display: inline-block;
@@ -312,7 +312,7 @@
   }
 
   /* ============================================================
-     PROOF — large confident serif statements with mono index
+     PROOF, large confident serif statements with mono index
      ============================================================ */
   .proof-head {
     margin-bottom: var(--space-5);
@@ -417,7 +417,7 @@
   }
 
   /* ============================================================
-     LET'S TALK — the single conversion point
+     LET'S TALK, the single conversion point
      ============================================================ */
   .talk-inner {
     max-width: var(--measure);
@@ -478,7 +478,7 @@
   .footer-copy { color: var(--ink-faint); }
 
   /* ============================================================
-     MOTION — progressive enhancement (html.js only).
+     MOTION, progressive enhancement (html.js only).
      No-JS === everything visible, all the time.
      ============================================================ */
   @media (prefers-reduced-motion: no-preference) {
@@ -521,7 +521,7 @@
 
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="name-mark" href="#top" aria-label="Christopher Sinclair — back to top">Christopher Sinclair</a>
+      <a class="name-mark" href="#top" aria-label="Christopher Sinclair, back to top">Christopher Sinclair</a>
       <nav class="header-meta" aria-label="Primary">
         <a href="#proof">Proof</a>
         <a href="#what">What I do</a>
@@ -538,7 +538,7 @@
       <div class="wrap hero-inner">
         <p class="kicker reveal">Fractional CTO &amp; Engineering Advisor</p>
         <h1 id="hero-title" class="reveal">I ship AI that does real work.</h1>
-        <p class="hero-sub reveal">I don't just advise on it.</p>
+        <p class="hero-sub reveal">I don't just advise on it. I understand it from the metal up.</p>
         <div class="hero-cta reveal">
           <a class="btn btn-primary" href="mailto:chris@sinclaircto.com">Email me <span aria-hidden="true">&rarr;</span></a>
           <a class="btn btn-ghost" href="https://www.linkedin.com/in/christopher-sinclair-cto" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -565,6 +565,14 @@
           <li class="proof-item reveal" style="--i:2">
             <span class="idx" aria-hidden="true"></span>
             <p>Went from full-stack engineer to CTO in two and a half years, leading a 13-person team.</p>
+          </li>
+          <li class="proof-item reveal" style="--i:3">
+            <span class="idx" aria-hidden="true"></span>
+            <p>Compiled my own Linux kernel with full-disk encryption, TPM, and secure boot.</p>
+          </li>
+          <li class="proof-item reveal" style="--i:4">
+            <span class="idx" aria-hidden="true"></span>
+            <p>Shipped Rust systems software: a 40-star network optimizer and an agentic MCP server with 42 tools.</p>
           </li>
         </ul>
       </div>
@@ -621,7 +629,9 @@
           </a>
           <div class="talk-links reveal">
             <a href="https://www.linkedin.com/in/christopher-sinclair-cto" target="_blank" rel="noopener noreferrer">LinkedIn &nearr;</a>
+            <a href="https://github.com/ShibbityShwab" target="_blank" rel="noopener noreferrer">GitHub &nearr;</a>
             <a href="mailto:chris@sinclaircto.com">Email</a>
+            <a href="tel:+13073572971">(307) 357-2971</a>
           </div>
         </div>
       </div>
